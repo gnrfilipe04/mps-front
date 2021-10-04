@@ -1,0 +1,10 @@
+[Unit]
+Description=MpsApp DocMPS
+StartLimitIntervalSec=0
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/local/src/mps-beta-main/mpsapp.sh
+
+[Install]
+WantedBy=multi-user.target
