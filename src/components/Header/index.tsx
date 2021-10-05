@@ -9,8 +9,8 @@ const Header = () => {
     <Container>
       <Logo />
       <ContainerRight>
-        {/* <InputSearch /> */}
-        <MdMoreVert size={30} color='#fff'/>
+        <InputSearch />
+        {/* <MdMoreVert size={30} color='#fff'/> */}
       </ContainerRight>
     </Container>
   );

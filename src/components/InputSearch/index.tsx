@@ -1,10 +1,17 @@
 import { createTheme, Input, ThemeProvider } from "@material-ui/core"
-import { useState } from "react";
-import { MdSearch } from "react-icons/md";
+import { useEffect, useState } from "react";
+import { MdArrowForward } from "react-icons/md";
+import isIp from "is-ip";
+import Cookie from "js-cookie";
+import { useSnackBar } from "../../contexts/SnackBarContext";
+import { api } from "../../services/api"
 import { Container } from "./styles";
 
 export const InputSearch = () => {
     const [showPlaceholder, setShowPlaceholder] = useState(false);
+    const { changeOpenSnackbar, changeIsSucess } = useSnackBar();
+
+    const [valueIp, setValueIp] = useState(Cookie.get('Agente-doc-mps') || '');
 
     const theme = createTheme({
         palette: {
@@ -24,23 +31,41 @@ export const InputSearch = () => {
         },
       });    
 
+    function setIP(){
+        const isValid = isIp(valueIp);
+
+        if(isValid){
+
+            Cookie.set('Agente-doc-mps', String(valueIp))
+
+            changeIsSucess(true);
+            changeOpenSnackbar(true);
+        }else {
+            changeIsSucess(false);
+            changeOpenSnackbar(true);
+        }
+    }  
+
     return (
         <ThemeProvider theme={theme}>
             <Container>
                 <Input
-                    placeholder={showPlaceholder ? 'buscar equipamento...' : ''}
-                    onMouseEnter={() => setShowPlaceholder(true)}
-                    onMouseOut={() => setShowPlaceholder(false)}
+                    placeholder='Digite o IP do servidor'
                     disableUnderline={true}
+                    value={valueIp}
+                    onChange={(e) => setValueIp(e.target.value)}
                     style={{
                         fontWeight: 300, 
-                        marginRight: 20, 
+                        marginRight: 0,
+                        paddingLeft: 5, 
+                        background: 'white'
                     }}
                 />
-                <MdSearch 
+                <MdArrowForward 
                     size={25} 
-                    color='#fff'
+                    color='#48BB78'
                     cursor='pointer'
+                    onClick={setIP}
                 />
             </Container>
         </ThemeProvider>
