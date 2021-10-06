@@ -9,7 +9,7 @@ const ip = Cookie.get("Agente-doc-mps")
 ip ? host = ip : host = 'localhost'
 
 export const api = axios.create({
-    baseURL: `http://${host}:3333/`,
+    baseURL: `https://${host}:443/`,
     httpsAgent: new https.Agent({
         rejectUnauthorized: false
     })
